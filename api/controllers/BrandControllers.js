@@ -103,3 +103,12 @@ exports.findAllBrands = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.AllBrands = async (req, res, next) => {
+  try {
+    const [result] = await Brand.getAllBrands();
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};

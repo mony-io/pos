@@ -34,7 +34,7 @@ exports.createNewProduct = async (req, res, next) => {
         deleteImg(path);
       }
       return res.send({
-        message: 'Sorry! Product name already exist.',
+        message: 'សុំអភ័យទោស! ឈ្មោះផលិតផលមានរួចហើយ...!',
         success: false,
       });
     }
@@ -48,7 +48,7 @@ exports.createNewProduct = async (req, res, next) => {
       if (path !== '') {
         deleteImg(path);
       }
-      return res.send({ message: 'Sorry! Product code already exist.' });
+      return res.send({ message: 'សុំអភ័យទោស! កូដផលិតផលមានរួចហើយ...!' });
     }
 
     //console.log(path);
@@ -148,7 +148,7 @@ exports.uppdateProduct = async (req, res, next) => {
         //deleteImg(path);
       }
       return res.send({
-        message: 'Sorry! Product name already exist.',
+        message: 'សុំអភ័យទោស! ឈ្មោះផលិតផលមានរួចហើយ...!',
         success: false,
       });
     }
@@ -163,7 +163,7 @@ exports.uppdateProduct = async (req, res, next) => {
         //deleteImg(path);
       }
       return res.send({
-        message: 'Sorry! Product Code already exist.',
+        message: 'សុំអភ័យទោស! កូដផលិតផលមានរួចហើយ...!',
         success: false,
       });
     }
@@ -191,9 +191,9 @@ exports.uppdateProduct = async (req, res, next) => {
         // await deleteImg(oldPath[0].product_image);
       }
 
-      res.send({ message: 'ការប្រែជោគជ័យ!', success: true });
+      res.send({ message: 'ការប្រែជោគជ័យ...!', success: true });
     } else {
-      res.send({ message: 'Update failed.', success: false });
+      res.send({ message: 'ការប្រែបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);
@@ -242,7 +242,7 @@ exports.findImgById = async (req, res, next) => {
       // console.log(image[0]);
       res.send(image);
     } else {
-      res.send({ message: "Image doesn't exist." });
+      res.send({ message: "មិនមានរូបភាព...!" });
     }
   } catch (err) {
     next(err);
@@ -258,9 +258,9 @@ exports.delete = async (req, res, next) => {
 
     if (result.affectedRows !== 0) {
       //deleteImg(path[0].product_image);
-      res.send({ message: 'Product has been deleted.', success: true });
+      res.send({ message: 'លុបផលិតផលត្រូវបានជោគជ៏យ...!', success: true });
     } else {
-      res.send({ message: 'Product has been failed.', success: false });
+      res.send({ message: 'លុបផលិតផលត្រូវបានបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);
@@ -320,7 +320,7 @@ exports.queryProductByProductCode = async (req, res, next) => {
     const [product] = await Product.findProductCode(req.query.q);
     if (product.length !== 0) {
       res.send({
-        message: 'Product Code already exist.Please! try another once.',
+        message: 'កូដផលិតផលមានរួចហើយ.សូម! សាកល្បងម្តងទៀត...!',
         success: false,
       });
     } else {

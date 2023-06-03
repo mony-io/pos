@@ -295,13 +295,13 @@ const ListSale = () => {
                         {item.customerName}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        {item.totalPrice}.00$
+                        ${item.totalPrice.toFixed(2)}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        {item.amount}.00$
+                        ${item.amount.toFixed(2)}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                        {item.money_change}.00$
+                        ${item.money_change.toFixed(2)}
                       </td>
                       <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                         <div className="flex justify-center">
@@ -471,7 +471,7 @@ const ListSale = () => {
                           សរុប
                         </td>
                         <td className="whitespace-nowrap border-r px-6 py-4 font-medium dark:border-neutral-500">
-                          {totalPrice.toFixed(2)}
+                          ${totalPrice.toFixed(2)}
                         </td>
                       </tr>
                     </tbody>

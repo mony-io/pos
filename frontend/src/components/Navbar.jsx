@@ -434,7 +434,7 @@ const Navbar = () => {
                         footer={[
                           <button
                             type="button"
-                            className="inline-block px-6 py-2.5 bg-red-600 text-white leading-tight rounded shadow-md hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out ml-1
+                            className="inline-block px-6 py-2.5 bg-red-600 text-white leading-tight rounded-sm shadow-sm hover:bg-red-700 hover:shadow-lg focus:bg-red-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-800 active:shadow-lg transition duration-150 ease-in-out ml-1
                               text-md
                               "
                             onClick={handleCancel}>
@@ -442,20 +442,22 @@ const Navbar = () => {
                           </button>,
                           <button
                             type="button"
-                            className="inline-block px-6 py-2.5 bg-blue-600 text-white text-md leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
+                            className="inline-block px-6 py-2.5 bg-blue-600 text-white text-md leading-tight rounded-sm shadow-sm hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
                             onClick={handleUpdate}>
                             កែប្រែ
                           </button>,
                         ]}
                         className={'modal-font'}>
-                        <div className="mb-4">
-                          <label
-                            htmlFor="exampleFormControlInput1"
-                            className="form-label inline-block text-gray-700 mt-5 mb-2">
-                            ពាក្យសម្ងាត់
-                          </label>
-                          <input
-                            className="form-control
+                        <form action="" autoComplete="off">
+                          <div className="mb-4">
+                            <label
+                              htmlFor="exampleFormControlInput1"
+                              className="form-label inline-block text-gray-700 mt-5 mb-2">
+                              ពាក្យសម្ងាត់
+                              <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              className="form-control
                                 block
                                 w-full
                                 px-4
@@ -465,171 +467,176 @@ const Navbar = () => {
                                 text-gray-700
                                 bg-white bg-clip-padding
                                 border border-solid border-gray-300
-                                rounded
+                                rounded-sm
                                 transition
                                 ease-in-out
                                 m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            placeholder="••••••••"
-                            id="exampleFormControlInput1"
-                            name="password"
-                            type={isHidden ? 'text' : 'password'}
-                            onChange={(e) => setPassword(e.target.value)}
-                            value={password.trim()}
-                            onKeyUp={() => {
-                              if (password === '') {
-                                setMsg('សូមបញ្ចូលពាក្យសម្ងាត់របស់អ្នក!');
-                                setColor('text-red-500');
-                              } else {
-                                if (PWD_REX.test(password)) {
-                                  setMsg('');
-                                  setValidPwd(true);
-                                } else {
-                                  setValidPwd(false);
+                              placeholder="••••••••"
+                              id="exampleFormControlInput1"
+                              name="password"
+                              type={isHidden ? 'text' : 'password'}
+                              onChange={(e) => setPassword(e.target.value)}
+                              value={password.trim()}
+                              onKeyUp={() => {
+                                if (password === '') {
+                                  setMsg('សូមបញ្ចូលពាក្យសម្ងាត់របស់អ្នក!');
                                   setColor('text-red-500');
-                                  setMsg(
-                                    'បញ្ជាក់!​ ពាក្យសម្ងាត់មិនត្រូវដកឃ្លានិងមានចំនួនចាប់ពី៤ខ្ទង់ឡើងទៅ!'
-                                  );
-                                }
-                              }
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.code === 'Space') {
-                                e.preventDefault();
-                              }
-                            }}
-                          />
-                          {msg && (
-                            <span className={`text-xs mt-2 text-red-500`}>
-                              {msg}
-                            </span>
-                          )}
-                        </div>
-                        <div className="mb-4">
-                          <label
-                            htmlFor="exampleFormControlInput1"
-                            className="form-label inline-block text-gray-700 mb-2">
-                            ពាក្យសម្ងាត់ថ្មី
-                          </label>
-                          <input
-                            className="form-control
-                                block
-                                w-full
-                                px-4
-                                py-2
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            placeholder="••••••••"
-                            id="exampleFormControlInput1"
-                            name="newPassword"
-                            type={isHidden ? 'text' : 'password'}
-                            onChange={(e) => setNewPassword(e.target.value)}
-                            value={newPassword.trim()}
-                            onKeyUp={() => {
-                              if (newPassword === '') {
-                                setMsgNewPassword('សូមបញ្ចូលពាក្យសម្ងាត់ថ្មី!');
-                              } else {
-                                if (PWD_REX.test(newPassword)) {
-                                  setMsgNewPassword('');
-                                  setValidPwd(true);
                                 } else {
-                                  setValidPwd(false);
-                                  setColor('text-red-500');
-                                  setMsgNewPassword(
-                                    'បញ្ជាក់!​ ពាក្យសម្ងាត់មិនត្រូវដកឃ្លានិងមានចំនួនចាប់ពី៤ខ្ទង់ឡើងទៅ!'
-                                  );
+                                  if (PWD_REX.test(password)) {
+                                    setMsg('');
+                                    setValidPwd(true);
+                                  } else {
+                                    setValidPwd(false);
+                                    setColor('text-red-500');
+                                    setMsg(
+                                      'បញ្ជាក់!​ ពាក្យសម្ងាត់មិនត្រូវដកឃ្លានិងមានចំនួនចាប់ពី៤ខ្ទង់ឡើងទៅ!'
+                                    );
+                                  }
                                 }
-                              }
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.code === 'Space') {
-                                e.preventDefault();
-                              }
-                            }}
-                          />
-                          {msgNewPassword && (
-                            <span className={`text-xs mt-2 ${color}`}>
-                              {msgNewPassword}
-                            </span>
-                          )}
-                        </div>
-                        <div>
-                          <label
-                            htmlFor="exampleFormControlInput1"
-                            className="form-label inline-block mb-2 text-gray-700 text-sm">
-                            ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់
-                          </label>
-                          <input
-                            className="form-control
-                                block
-                                w-full
-                                px-4
-                                py-2
-                                text-base
-                                font-normal
-                                text-gray-700
-                                bg-white bg-clip-padding
-                                border border-solid border-gray-300
-                                rounded
-                                transition
-                                ease-in-out
-                                m-0
-                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                            placeholder="••••••••"
-                            id="exampleFormControlInput1"
-                            name="ComfirmPassword"
-                            type={isHidden ? 'text' : 'password'}
-                            onChange={(e) => setComfirmPassword(e.target.value)}
-                            value={comfirmPassword.trim()}
-                            onKeyUp={() => {
-                              if (comfirmPassword === '') {
-                                setMsgComfirm('សូម​! ផ្ទៀងផ្ទាត់លេខសម្ងាត់!');
-                                setColor('text-red-500');
-                              } else {
-                                setMsgComfirm('');
-                                matchPassword();
-                              }
-                            }}
-                            onKeyDown={(e) => {
-                              if (e.code === 'Space') {
-                                e.preventDefault();
-                              }
-                            }}
-                          />
-
-                          <div
-                            className={`flex ${
-                              msgComfirm ? 'justify-between' : 'justify-end'
-                            } mb-5`}>
-                            {msgComfirm && (
-                              <span className={`text-xs mt-2 ${color}`}>
-                                {msgComfirm}
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.code === 'Space') {
+                                  e.preventDefault();
+                                }
+                              }}
+                            />
+                            {msg && (
+                              <span className={`text-xs mt-2 text-red-500`}>
+                                {msg}
                               </span>
                             )}
-                            <div className="flex items-center mt-2">
-                              <input
-                                type="checkbox"
-                                className=" w-4 h-4 rounded mr-1"
-                                onChange={showPassword}
-                                checked={isHidden}
-                              />
-                              <label
-                                htmlFor=""
-                                className="text-blue-400 text-xs mt-[2px]">
-                                បង្ហាញពាក្យសម្ងាត់?
-                              </label>
+                          </div>
+                          <div className="mb-4">
+                            <label
+                              htmlFor="exampleFormControlInput1"
+                              className="form-label inline-block text-gray-700 mb-2">
+                              ពាក្យសម្ងាត់ថ្មី{' '}
+                              <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              className="form-control
+                                block
+                                w-full
+                                px-4
+                                py-2
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded-sm
+                                transition
+                                ease-in-out
+                                m-0
+                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                              placeholder="••••••••"
+                              id="exampleFormControlInput1"
+                              name="newPassword"
+                              type={isHidden ? 'text' : 'password'}
+                              onChange={(e) => setNewPassword(e.target.value)}
+                              value={newPassword.trim()}
+                              onKeyUp={() => {
+                                if (newPassword === '') {
+                                  setMsgNewPassword(
+                                    'សូមបញ្ចូលពាក្យសម្ងាត់ថ្មី!'
+                                  );
+                                } else {
+                                  if (PWD_REX.test(newPassword)) {
+                                    setMsgNewPassword('');
+                                    setValidPwd(true);
+                                  } else {
+                                    setValidPwd(false);
+                                    setColor('text-red-500');
+                                    setMsgNewPassword(
+                                      'បញ្ជាក់!​ ពាក្យសម្ងាត់មិនត្រូវដកឃ្លានិងមានចំនួនចាប់ពី៤ខ្ទង់ឡើងទៅ!'
+                                    );
+                                  }
+                                }
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.code === 'Space') {
+                                  e.preventDefault();
+                                }
+                              }}
+                            />
+                            {msgNewPassword && (
+                              <span className={`text-xs mt-2 ${color}`}>
+                                {msgNewPassword}
+                              </span>
+                            )}
+                          </div>
+                          <div>
+                            <label
+                              htmlFor="exampleFormControlInput1"
+                              className="form-label inline-block mb-2 text-gray-700 text-sm">
+                              ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់{' '}
+                              <span className="text-red-500">*</span>
+                            </label>
+                            <input
+                              className="form-control
+                                block
+                                w-full
+                                px-4
+                                py-2
+                                text-base
+                                font-normal
+                                text-gray-700
+                                bg-white bg-clip-padding
+                                border border-solid border-gray-300
+                                rounded-sm
+                                transition
+                                ease-in-out
+                                m-0
+                              focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
+                              placeholder="••••••••"
+                              id="exampleFormControlInput1"
+                              name="ComfirmPassword"
+                              type={isHidden ? 'text' : 'password'}
+                              onChange={(e) =>
+                                setComfirmPassword(e.target.value)
+                              }
+                              value={comfirmPassword.trim()}
+                              onKeyUp={() => {
+                                if (comfirmPassword === '') {
+                                  setMsgComfirm('សូម​! ផ្ទៀងផ្ទាត់លេខសម្ងាត់!');
+                                  setColor('text-red-500');
+                                } else {
+                                  setMsgComfirm('');
+                                  matchPassword();
+                                }
+                              }}
+                              onKeyDown={(e) => {
+                                if (e.code === 'Space') {
+                                  e.preventDefault();
+                                }
+                              }}
+                            />
+                            <div
+                              className={`flex ${
+                                msgComfirm ? 'justify-between' : 'justify-end'
+                              } mb-5`}>
+                              {msgComfirm && (
+                                <span className={`text-xs mt-2 ${color}`}>
+                                  {msgComfirm}
+                                </span>
+                              )}
+                              <div className="flex items-center mt-2">
+                                <input
+                                  type="checkbox"
+                                  className=" w-4 h-4 rounded mr-1"
+                                  onChange={showPassword}
+                                  checked={isHidden}
+                                />
+                                <label
+                                  htmlFor=""
+                                  className="text-blue-400 text-xs mt-[2px]">
+                                  បង្ហាញពាក្យសម្ងាត់?
+                                </label>
+                              </div>
                             </div>
                           </div>
-                        </div>
-
+                        </form>
                         {/* end of change password modal */}
                       </Modal>
                     </li>
@@ -695,7 +702,7 @@ const Navbar = () => {
               <Button
                 key="cancel"
                 type="button"
-                className="bg-red-500 text-white leading-tight rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out ml-1 text-md"
+                className="bg-red-500 text-white leading-tight rounded-sm shadow-sm hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out ml-1 text-md"
                 onClick={closeLogout}>
                 ទេ
               </Button>,
@@ -703,7 +710,7 @@ const Navbar = () => {
                 key="submit"
                 // loading={loading}
                 type="button"
-                className="bg-blue-600 text-white text-md leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
+                className="bg-blue-600 text-white text-md leading-tight rounded-sm shadow-sm hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1"
                 onClick={logoutHandler}>
                 បាទ/ចាស
               </Button>,
@@ -726,7 +733,7 @@ const Navbar = () => {
               <Button
                 key="cancel"
                 type="button"
-                className="bg-red-500 text-white leading-tight rounded shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out ml-1 text-md"
+                className="bg-red-500 text-white leading-tight rounded-sm shadow-sm hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out ml-1 text-md"
                 onClick={closeAccountModal}>
                 បិទ
               </Button>,
@@ -735,7 +742,7 @@ const Navbar = () => {
                 // loading={loading}
                 onClick={updateUser}
                 type="button"
-                className="bg-blue-600 text-white text-md leading-tight rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+                className="bg-blue-600 text-white text-md leading-tight rounded-sm shadow-sm hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
                 កែប្រែ
               </Button>,
             ]}>
@@ -745,7 +752,7 @@ const Navbar = () => {
                 <label
                   htmlFor="username"
                   className="form-label inline-block text-gray-700 mt-5 text-sm mb-2">
-                  ឈ្មោះ​អ្នកប្រើប្រាស់
+                  ឈ្មោះ​អ្នកប្រើប្រាស់ <span className="text-red-500">*</span>
                 </label>
                 <input
                   className="form-control
@@ -758,7 +765,7 @@ const Navbar = () => {
                                 text-gray-700
                                 bg-white bg-clip-padding
                                 border border-solid border-gray-300
-                                rounded
+                                rounded-sm
                                 transition
                                 ease-in-out
                                 m-0
@@ -789,7 +796,7 @@ const Navbar = () => {
                                 text-gray-700
                                 bg-white bg-clip-padding
                                 border border-solid border-gray-300
-                                rounded
+                                rounded-sm
                                 transition
                                 ease-in-out
                                 m-0
@@ -806,7 +813,7 @@ const Navbar = () => {
                 <label
                   htmlFor="roles"
                   className="block mb-2 text-sm font-medium text-gray-900 ">
-                  ប្រភេទអ្នកប្រើប្រាស់
+                  ប្រភេទអ្នកប្រើប្រាស់ <span className="text-red-500">*</span>
                 </label>
                 <select
                   id="rolse"
@@ -822,7 +829,7 @@ const Navbar = () => {
                                     text-gray-700
                                     bg-white bg-clip-padding bg-no-repeat
                                     border border-solid border-gray-300
-                                    rounded
+                                    rounded-sm
                                     transition
                                     ease-in-out
                                     m-0
@@ -849,7 +856,7 @@ const Navbar = () => {
                                 text-gray-700
                                 bg-white bg-clip-padding
                                 border border-solid border-gray-300
-                                rounded
+                                rounded-sm
                                 transition
                                 ease-in-out
                                 m-0
@@ -875,7 +882,7 @@ const Navbar = () => {
             <div className="offcanvas-header flex items-center justify-between p-4">
               <button
                 type="button"
-                className="btn-close box-content w-4 h-4 p-2 -my-5 -mr-2 text-black border-none rounded-none opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
+                className="btn-close box-content w-4 h-4 p-2 -my-5 -mr-2 text-black border-none rounded-sm opacity-50 focus:shadow-none focus:outline-none focus:opacity-100 hover:text-black hover:opacity-75 hover:no-underline"
                 data-bs-dismiss="offcanvas"
                 aria-label="Close"></button>
               <h5

@@ -9,4 +9,5 @@ router
 router.delete('/supplier/:id', Supplier.deleteSupplier);
 router.put('/supplier/:id', Supplier.updateSupplier);
 router.get('/supplier/:id', Supplier.findOne);
+router.get('/all_suppliers', Supplier.AllSuppliers);
 module.exports = router;

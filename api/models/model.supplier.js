@@ -61,6 +61,11 @@ class Supplier {
     const sql = 'SELECT *FROM tblSupplies WHERE phone = ?';
     return db.execute(sql, [phone]);
   }
+
+  static getAllSuppliers() {
+    const sql = 'SELECT * FROM tblSupplies';
+    return db.execute(sql);
+  }
 }
 
 module.exports = Supplier;

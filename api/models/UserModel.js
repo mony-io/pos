@@ -39,9 +39,9 @@ class Users {
     return db.execute(sql, [username]);
   }
 
-  static check_name (username) {
+  static check_name(username) {
     const sql = 'SELECT *FROM tblUsers WHERE username=?';
-    return db.execute(sql,[username]);
+    return db.execute(sql, [username]);
   }
 
   static findByEmail(email) {
@@ -50,9 +50,9 @@ class Users {
     return db.execute(sql, [email]);
   }
 
-  static check_email(email){
-    const sql = "SELECT *FROM tblUsers WHERE email = ?";
-    return db.execute(sql,[email])
+  static check_email(email) {
+    const sql = 'SELECT *FROM tblUsers WHERE email = ?';
+    return db.execute(sql, [email]);
   }
 
   static updateRefreshToken(id, refreshToken) {
@@ -111,6 +111,12 @@ class Users {
   static duplicate_email(id, email) {
     const sql = 'SELECT *FROM tblUsers WHERE NOT id = ? AND email = ?';
     return db.execute(sql, [id, email]);
+  }
+
+  // check admin model
+  static isAdmin(email) {
+    const sql = 'SELECT *FROM tblUsers WHERE tblUsers.email = ? AND role_id=1';
+    return db.execute(sql, [email]);
   }
 }
 

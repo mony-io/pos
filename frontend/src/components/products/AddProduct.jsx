@@ -72,8 +72,8 @@ const AddProduct = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/categories');
-      setCategories(res.data.result);
+      const res = await axios.get('http://localhost:3001/all_categories');
+      setCategories(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -81,8 +81,8 @@ const AddProduct = () => {
 
   const fetchBrands = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/brands');
-      setBrands(res.data.result);
+      const res = await axios.get('http://localhost:3001/all_brands');
+      setBrands(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -91,8 +91,8 @@ const AddProduct = () => {
   // fetch units of product function
   async function fetchUnits() {
     try {
-      const res = await axios.get('http://localhost:3001/product-units');
-      setUnits(res.data.result);
+      const res = await axios.get('http://localhost:3001/all_units');
+      setUnits(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -100,8 +100,8 @@ const AddProduct = () => {
 
   const fetchSupplies = async () => {
     try {
-      const res = await axios.get('http://localhost:3001/supplier');
-      setSupplies(res.data.result);
+      const res = await axios.get('http://localhost:3001/all_suppliers');
+      setSupplies(res.data);
     } catch (err) {
       console.log(err);
     }
@@ -259,7 +259,7 @@ const AddProduct = () => {
 
   return (
     <>
-      <div className="flex-1 h-screen overflow-auto bg-slate-50">
+      <div className="flex-1 h-screen overflow-auto bg-gray-100">
         <Navbar />
         <div className="p-5">
           <h1 className="text-xl mb-4 text-left">បន្ថែមផលិតផល</h1>

@@ -9,7 +9,7 @@ import { useQuery } from 'react-query';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Select, Modal, Button, Popover } from 'antd';
-import { useAuth } from "../utls/auth";
+import { useAuth } from '../utls/auth';
 
 const Sale = () => {
   const auth = useAuth();
@@ -146,7 +146,7 @@ const Sale = () => {
           });
         }
       } else {
-        setCusMsg('សូម! បញ្ចូលឈ្មោះអតិថិជន');
+        setCusMsg('សូម! បញ្ចូលឈ្មោះអតិថិជន...!');
       }
     } catch (err) {
       console.log(err);
@@ -170,6 +170,7 @@ const Sale = () => {
 
   const onAdd = (product) => {
     const exist = cartItems.find((x) => x.product_id === product.product_id);
+
     if (exist) {
       setCartItems(
         cartItems.map((x) =>
@@ -178,7 +179,27 @@ const Sale = () => {
             : x
         )
       );
+
+      // alert message
+      if (exist.old_qty <= exist.qty) {
+        playAudio(
+          'http://localhost:3001/audio/SOUND EFFECT -  APPLE iPhone X ALERTS  -  CHORD.mp4'
+        );
+        toast.error('🦄 សូមអភ័យទោស! ចំនួនផលិតផលរបស់អ្នកមិនគ្រប់គ្រាន់ទេ', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'light',
+        });
+      } else {
+        playAudio('http://localhost:3001/audio/sound_hello_iphone.mp4');
+      }
     } else {
+      playAudio('http://localhost:3001/audio/sound_hello_iphone.mp4');
       setCartItems([
         ...cartItems,
         { ...product, qty: 1, old_qty: product.qty },
@@ -229,8 +250,8 @@ const Sale = () => {
 
       if (qty > exist.old_qty) {
         playAudio('http://localhost:3001/audio/audio-notification-sound.mp3');
-        toast.error('🦄 សូមអភ័យទោស!ចំនួនផលិតផលរបស់អ្នកមិនគ្រប់គ្រាន់ទេ', {
-          position: 'top-right',
+        toast.error('🦄 សូមអភ័យទោស! ចំនួនផលិតផលរបស់អ្នកមិនគ្រប់គ្រាន់ទេ...!', {
+          position: 'top-center',
           autoClose: 3000,
           hideProgressBar: false,
           closeOnClick: true,
@@ -333,7 +354,11 @@ const Sale = () => {
                   <Select
                     className="w-full py-[2px] bg-white border border-[#ddd] outline-none rounded-sm"
                     showSearch
-                    value={!auth.isUpdate ? cusId : cartItems.length > 0 && cartItems[0].customer_id}
+                    value={
+                      !auth.isUpdate
+                        ? cusId
+                        : cartItems.length > 0 && cartItems[0].customer_id
+                    }
                     bordered={false}
                     // value={cusId}
                     optionFilterProp="children"
@@ -408,8 +433,8 @@ const Sale = () => {
               </div>
             </div>
           </div>
-          <div className="col-span-4 relative overflow-auto scrollbar h-[830px] bg-blue-50">
-            <div className="h-12 fixed top-[50%] -right-6 justify-between items-center">
+          <div className="modal-fonts col-span-4 relative overflow-auto scrollbar h-[830px] bg-blue-50">
+            <div className="h-12 fixed top-[50%] -right-6 justify-between items-center z-50">
               <div className="rotate-90 rounded-md overflow-hidden">
                 <div
                   style={{
@@ -428,7 +453,7 @@ const Sale = () => {
                 </div>
               </div>
             </div>
-            <div className="h-12 fixed top-[58%] -right-6 justify-between items-center">
+            <div className="modal-fonts h-12 fixed top-[58%] -right-6 justify-between items-center z-50">
               <div className="rotate-90 rounded-md overflow-hidden">
                 <div
                   style={{
@@ -475,7 +500,7 @@ const Sale = () => {
             <Button
               key="cancel"
               type="button"
-              className="bg-red-500 text-white leading-tight rounded-sm shadow-md hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out ml-1 text-md"
+              className="bg-red-500 text-white leading-tight rounded-sm shadow-sm hover:bg-red-600 hover:shadow-lg focus:bg-red-600 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-red-700 active:shadow-lg transition duration-150 ease-in-out ml-1 text-md"
               onClick={onClose}>
               បោះបង់
             </Button>,
@@ -483,7 +508,7 @@ const Sale = () => {
               onClick={addCustomerHandler}
               key="submit"
               type="button"
-              className="bg-blue-600 text-white text-md leading-tight rounded shadow-sm hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
+              className="bg-blue-600 text-white text-md leading-tight rounded-sm shadow-sm hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
               យល់ព្រម
             </Button>,
           ]}>
@@ -494,7 +519,7 @@ const Sale = () => {
                 <label
                   htmlFor="customerName"
                   className="form-label inline-block text-gray-700 mb-2 text-lg">
-                  ឈ្មោះអតិថិជន
+                  ឈ្មោះអតិថិជន<span className="text-red-500">*</span>
                 </label>
                 <input
                   className="form-control
@@ -516,6 +541,11 @@ const Sale = () => {
                   id="customerName"
                   name="customerName"
                   type={'text'}
+                  onKeyDown={(e) => {
+                    if (e.code === 'Space') {
+                      e.preventDefault();
+                    }
+                  }}
                   onChange={handleChange}
                   value={customer.customerName}
                 />
@@ -525,9 +555,14 @@ const Sale = () => {
                 <label
                   htmlFor="phoneNumber"
                   className="form-label inline-block text-gray-700 mb-2 text-lg">
-                  លេខទូរស័ព្ទ
+                  លេខទូរស័ព្ទ <span className="text-red-500">*</span>
                 </label>
                 <input
+                  onKeyDown={(e) => {
+                    if (e.code === 'Space') {
+                      e.preventDefault();
+                    }
+                  }}
                   className="form-control
                                 block
                                 w-full
@@ -591,7 +626,7 @@ const Sale = () => {
               <textarea
                 className="form-control
                                 block
-                                w-full
+                                w-[49%]
                                 px-4
                                 text-base
                                 font-normal

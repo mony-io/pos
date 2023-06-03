@@ -195,7 +195,7 @@ const EditeProduct = () => {
 
   return (
     <>
-      <div className="flex-1 h-screen overflow-auto bg-slate-50">
+      <div className="flex-1 h-screen overflow-auto bg-gray-100">
         <Navbar />
         <div className="p-5">
           <h1 className="text-xl mb-4 text-left">កែប្រែផលិតផល</h1>

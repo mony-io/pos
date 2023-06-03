@@ -447,7 +447,7 @@ const Cart = (props) => {
             <label
               htmlFor="exampleFormControlInput1"
               className="form-label inline-block text-gray-700 mb-2 text-lg">
-              បង់ដោយ
+              បង់ដោយ <span className='text-red-500'>*</span>
             </label>
             <select
               className="form-select appearance-none
@@ -474,8 +474,8 @@ const Cart = (props) => {
               value={payemntType}>
               {!auth.isUpdate && <option value={''}>ការបង់ប្រាក់</option>}
               {data &&
-                data.map((item) => (
-                  <option value={item.id} key={item.id}>
+                data.map((item, index) => (
+                  <option value={item.id} key={index}>
                     {item.payment_type}
                   </option>
                 ))}

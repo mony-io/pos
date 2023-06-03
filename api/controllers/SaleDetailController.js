@@ -6,7 +6,7 @@ module.exports.create = async (req, res, next) => {
     console.log(req.body);
     let sale_details = new SaleDetail(req.body);
     sale_details = await sale_details.save();
-    res.send({ message: "Noted", success: true });
+    res.send({ message: "បានកត់សម្គាល់...!", success: true });
   } catch (err) {
     next(err);
   }
@@ -47,7 +47,7 @@ module.exports.updateSaleDetails = async (req, res, next) => {
     let sale_details = new SaleDetail(data);
     sale_details = await sale_details.save();
 
-    res.send({ message: "Noted", success: true });
+    res.send({ message: "បានកត់សម្គាល់...!", success: true });
   } catch (err) {
     next(err);
   }

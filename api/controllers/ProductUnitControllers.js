@@ -4,7 +4,7 @@ exports.createNewUnit = async (req, res, next) => {
   try {
     if (req.body.unit === '') {
       return res.send({
-        message: 'សូម! បញ្ចូលឈ្មោះឯកតា',
+        message: 'សូម! បញ្ចូលឈ្មោះឯកតា...!',
         success: false,
       });
     }
@@ -13,14 +13,14 @@ exports.createNewUnit = async (req, res, next) => {
     const [result] = await ProductUnits.findByUnit(req.body.unit);
 
     if (result.length !== 0) {
-      return res.send({ message: 'ឯកតាមានរួចហើយ!', success: false });
+      return res.send({ message: 'ឯកតាមានរួចហើយ...!', success: false });
     }
 
     let productUnit = new ProductUnits(req.body.unit);
     productUnit = await productUnit.save();
     res
       .status(201)
-      .send({ message: 'ឯកតាបានបង្កើតដោយជោគជ័យ!', success: true });
+      .send({ message: 'ឯកតាបានបង្កើតដោយជោគជ័យ...!', success: true });
   } catch (err) {
     next(err);
   }
@@ -29,7 +29,7 @@ exports.createNewUnit = async (req, res, next) => {
 exports.updateUnit = async (req, res, next) => {
   try {
     if (req.body.unit === '') {
-      return res.send({ message: 'សូម! បញ្ចូលឯកតាផលិតផល' });
+      return res.send({ message: 'សូម! បញ្ចូលឯកតាផលិតផល...!' });
     }
 
     // check update duplicate
@@ -39,7 +39,7 @@ exports.updateUnit = async (req, res, next) => {
     );
     //console.log(unit);
     if (unit.length !== 0) {
-      return res.send({ message: 'ឯកតាផលិតផលមានរួចហើយ!', success: false });
+      return res.send({ message: 'ឯកតាផលិតផលមានរួចហើយ...!', success: false });
     }
 
     const [result] = await ProductUnits.updateById(
@@ -48,9 +48,9 @@ exports.updateUnit = async (req, res, next) => {
     );
 
     if (result.affectedRows !== 0) {
-      res.send({ message: 'ឯកតាផលិតផលត្រូវបានកែប្រែដោយជោគជ័យ!', success: true });
+      res.send({ message: 'ឯកតាផលិតផលត្រូវបានកែប្រែដោយជោគជ័យ...!', success: true });
     } else {
-      res.send({ message: 'ឯកតាផលិតផលត្រូវបានកែប្រែបរាជ័យ!', success: false });
+      res.send({ message: 'ឯកតាផលិតផលត្រូវបានកែប្រែបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);
@@ -69,9 +69,9 @@ exports.deleteUnit = async (req, res, next) => {
     }
     const [result] = await ProductUnits.deleteById(req.params.id);
     if (result.affectedRows !== 0) {
-      res.send({ message: 'បានលុបឯកតា!', success: true });
+      res.send({ message: 'បានលុបឯកតា...!', success: true });
     } else {
-      res.send({ message: 'បានលុបឯកតា!', success: false });
+      res.send({ message: 'បានលុបឯកតា...!', success: false });
     }
   } catch (err) {
     next(err);
@@ -107,5 +107,14 @@ exports.findAllUnit = async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+};
+
+exports.AllUnits = async (req, res, next) => {
+  try {
+    const [result] = await ProductUnits.getAllUnits();
+    res.send(result);
+  } catch (err) {
+    next(err);
   }
 };

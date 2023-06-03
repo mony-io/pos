@@ -277,7 +277,7 @@ const ListUsers = () => {
       console.log(err);
     }
   };
-  
+
   // mutation for update
   const updateMutation = useMutation({
     mutationFn: handleUpdate,
@@ -303,13 +303,13 @@ const ListUsers = () => {
         <div className="w-full h-1 bg-blue-400 shadow-sm mb-5"></div>
         <div className="flex justify-between mb-3">
           <div className="flex">
-            <Link to="/adduser" className='mr-5'>
+            <Link to="/adduser" className="mr-5">
               <button className="hidden md:block ml-1 px-6 py-1.5 rounded-sm font-medium tracking-wider bg-teal-400 hover:bg-teal-500 duration-200 text-white hover:shadow">
                 បន្ថែម
               </button>
             </Link>
             <div>
-            Show    
+              Show
               <select
                 className=" border bg-transparent rounded-sm ml-2 mr-2 outline-none px-3 shadow py-[2px]"
                 onChange={(e) => {
@@ -323,7 +323,8 @@ const ListUsers = () => {
                 <option value={40}>40</option>
                 <option value={50}>50</option>
                 <option value={100}>100</option>
-              </select> Entities
+              </select>{' '}
+              Entities
             </div>
           </div>
           <input
@@ -510,7 +511,7 @@ const ListUsers = () => {
                     <label
                       htmlFor="username"
                       className="form-label inline-block text-gray-700 mt-5 text-sm mb-2">
-                      ឈ្មោះ​អ្នកប្រើប្រាស់
+                      ឈ្មោះ​អ្នកប្រើប្រាស់ <span className='text-red-500'>*</span>
                     </label>
                     <input
                       className="form-control
@@ -572,7 +573,7 @@ const ListUsers = () => {
                     <label
                       htmlFor="roles"
                       className="block mb-2 text-sm font-medium text-gray-900 ">
-                      ប្រភេទអ្នកប្រើប្រាស់
+                      ប្រភេទអ្នកប្រើប្រាស់ <span className='text-red-500'>*</span>
                     </label>
                     <select
                       onChange={handleChange}
@@ -691,14 +692,15 @@ const ListUsers = () => {
                 ]}>
                 {/* ======== content ======== */}
                 <div className="grid grid-cols-1">
-                  <div className="">
-                    <label
-                      htmlFor="username"
-                      className="form-label inline-block text-gray-700 mt-5 text-sm mb-2">
-                      ពាក្យសម្ងាត់ថ្មី
-                    </label>
-                    <input
-                      className="form-control
+                  <form action="" autoComplete="off">
+                    <div className="">
+                      <label
+                        htmlFor="username"
+                        className="form-label inline-block text-gray-700 mt-5 text-sm mb-2">
+                        ពាក្យសម្ងាត់ថ្មី <span className='text-red-500'>*</span>
+                      </label>
+                      <input
+                        className="form-control
                                 block
                                 w-full
                                 px-4
@@ -713,31 +715,31 @@ const ListUsers = () => {
                                 ease-in-out
                                 m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                      placeholder=""
-                      id="password"
-                      name="password"
-                      type={'password'}
-                      onChange={(e) => {
-                        setPassword((prev) => ({
-                          ...prev,
-                          [e.target.name]: e.target.value,
-                        }));
-                      }}
-                      value={password.password}
-                    />
-                    {/* ============= message ============= */}
-                    {msgPwd && (
-                      <span className="text-red-500 text-xs">{msgPwd}</span>
-                    )}
-                  </div>
-                  <div className="mb-5">
-                    <label
-                      htmlFor="email"
-                      className="form-label inline-block text-gray-700 mt-5 text-sm mb-2">
-                      ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់
-                    </label>
-                    <input
-                      className="form-control
+                        placeholder=""
+                        id="password"
+                        name="password"
+                        type={'password'}
+                        onChange={(e) => {
+                          setPassword((prev) => ({
+                            ...prev,
+                            [e.target.name]: e.target.value,
+                          }));
+                        }}
+                        value={password.password}
+                      />
+                      {/* ============= message ============= */}
+                      {msgPwd && (
+                        <span className="text-red-500 text-xs">{msgPwd}</span>
+                      )}
+                    </div>
+                    <div className="mb-5">
+                      <label
+                        htmlFor="email"
+                        className="form-label inline-block text-gray-700 mt-5 text-sm mb-2">
+                        ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់ <span className='text-red-500'>*</span>
+                      </label>
+                      <input
+                        className="form-control
                                 block
                                 w-full
                                 px-4
@@ -752,22 +754,23 @@ const ListUsers = () => {
                                 ease-in-out
                                 m-0
                               focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none"
-                      placeholder=""
-                      id="cpassword"
-                      name="cpassword"
-                      type={'password'}
-                      onChange={(e) => {
-                        setPassword((prev) => ({
-                          ...prev,
-                          [e.target.name]: e.target.value,
-                        }));
-                      }}
-                      value={password.cpassword}
-                    />
-                    {msgcpwd && (
-                      <span className="text-red-500 text-xs">{msgcpwd}</span>
-                    )}
-                  </div>
+                        placeholder=""
+                        id="cpassword"
+                        name="cpassword"
+                        type={'password'}
+                        onChange={(e) => {
+                          setPassword((prev) => ({
+                            ...prev,
+                            [e.target.name]: e.target.value,
+                          }));
+                        }}
+                        value={password.cpassword}
+                      />
+                      {msgcpwd && (
+                        <span className="text-red-500 text-xs">{msgcpwd}</span>
+                      )}
+                    </div>
+                  </form>
                 </div>
                 {/* ========= end of content ==== */}
               </Modal>

@@ -2,6 +2,22 @@ const Customer = require('../models/CustomerModel');
 
 module.exports.create = async (req, res, next) => {
   try {
+    const name = req.body.customerName.trim() || '';
+    if (name === '') {
+      return res.send({
+        message: 'សូមបញ្ជូលឈ្មោះអតិថិជន...!',
+        success: false,
+      });
+    }
+
+    const phone = req.body.phoneNumber.trim() || '';
+    if (phone === '') {
+      return res.send({
+        message: 'សូមបញ្ជូលលេខអតិថិជន...!',
+        success: false,
+      });
+    }
+
     let customer = new Customer(
       req.body.customerName.trim(),
       req.body.phoneNumber,
@@ -15,15 +31,15 @@ module.exports.create = async (req, res, next) => {
     );
     if (phoneNumber.length > 0) {
       return res.send({
-        message: 'លេខអតិថិជនមាននៅក្នុងប្រព័ន្ធរួចរាល់ហើយ!',
+        message: 'លេខអតិថិជនមានក្នុងប្រព័ន្ធរួចហើយ...!',
         success: false,
       });
     }
 
-   customer = await customer.save();
+    customer = await customer.save();
     res.send({
-      message: 'អតិថិជនត្រូវបានបញ្ចូលទៅក្នុងប្រព័ន្ធដោយជោគជជ័យ!',
-       success: true,
+      message: 'អតិថិជនត្រូវបានបញ្ចូលទៅក្នុងប្រព័ន្ធដោយជោគជជ័យ...!',
+      success: true,
     });
   } catch (err) {
     next(err);
@@ -85,11 +101,11 @@ module.exports.deleteById = async (req, res, next) => {
     const [result] = await Customer.deleteById(req.params.id);
     if (result.affectedRows > 0) {
       res.send({
-        message: 'អ្នកប្រើប្រាស់ត្រូវបានលុបដោយជោគជ័យ!',
+        message: 'អ្នកប្រើប្រាស់ត្រូវបានលុបដោយជោគជ័យ...!',
         success: true,
       });
     } else {
-      res.send({ message: 'ការលុបត្រូវបានបរាជ័យ!', success: false });
+      res.send({ message: 'ការលុបត្រូវបានបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);
@@ -105,24 +121,27 @@ module.exports.update_customer = async (req, res, next) => {
     const id = req.params.id || 0;
 
     if (customerName === '') {
-      return res.send({ message: 'សូម! បញ្ចូលឈ្មោះអតិថិជន', success: false });
+      return res.send({
+        message: 'សូម! បញ្ចូលឈ្មោះអតិថិជន...!',
+        success: false,
+      });
     }
     if (phone === '') {
       return res.send({
-        message: 'សូម! បញ្ចូលលេខទូរស័ព្ទអតិថិជន',
+        message: 'សូម! បញ្ចូលលេខទូរស័ព្ទអតិថិជន...!',
         success: false,
       });
     }
 
     if (id === 0 || id === '') {
-      return res.send({ message: 'ការកែប្រែបរាជ័យ!', success: false });
+      return res.send({ message: 'ការកែប្រែបរាជ័យ...!', success: false });
     }
 
     // check duplicate by phone number
     const [phone_duplicate] = await Customer.checkUpdateDuplicate(id, phone);
     if (phone_duplicate.length > 0) {
       return res.send({
-        message: 'លេខទូរស័ព្ទមាននៅក្នុងប្រព័ន្ធរួចរាល់ហើយ!',
+        message: 'លេខទូរស័ព្ទមាននៅក្នុងប្រព័ន្ធរួចរាល់ហើយ...!',
         success: false,
       });
     }
@@ -135,9 +154,12 @@ module.exports.update_customer = async (req, res, next) => {
       id
     );
     if (result.affectedRows > 0) {
-      res.send({ message: 'អតិថិជនត្រូវបានកែប្រែដោយជោគជ័យ!', success: true });
+      res.send({
+        message: 'អតិថិជនត្រូវបានកែប្រែដោយជោគជ័យ...!',
+        success: true,
+      });
     } else {
-      res.send({ message: 'ការកែប្រែបរាជ័យ!', success: false });
+      res.send({ message: 'ការកែប្រែបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);

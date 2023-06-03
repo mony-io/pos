@@ -102,3 +102,13 @@ exports.findAllCategories = async (req, res, next) => {
     next(error);
   }
 };
+
+exports.allCategories = async (req, res, next) => {
+  try {
+    const [result] = await Category.getAllCategories();
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};
+

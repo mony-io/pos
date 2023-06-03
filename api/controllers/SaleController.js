@@ -1,4 +1,4 @@
-const Sale = require("../models/SaleModel");
+const Sale = require('../models/SaleModel');
 module.exports.create = async (req, res, next) => {
   try {
     let sale = new Sale(
@@ -18,7 +18,7 @@ module.exports.ListSales = async (req, res, next) => {
   try {
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const invoiceNumber = req.query.search || "";
+    const invoiceNumber = req.query.search || '';
     const user_id = req.query.user_id || 0;
     const role = req.query.role || 0;
 
@@ -63,11 +63,11 @@ module.exports.delete_sale = async (req, res, next) => {
     const [result] = await Sale.DeleteSale(req.params.id);
     if (result.affectedRows > 0) {
       res.send({
-        message: "ការលក់ត្រូវបានលុបចេញពីប្រព័ន្ធដោយជោគជ័យ!",
+        message: 'ការលក់ត្រូវបានលុបចេញពីប្រព័ន្ធដោយជោគជ័យ...!',
         success: true,
       });
     } else {
-      res.send({ message: "ការលុបបរាជ័យ!", success: false });
+      res.send({ message: 'ការលុបបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);
@@ -78,16 +78,16 @@ exports.sale_reports = async (req, res, next) => {
   try {
     const limit = req.query.limit || 10;
     const page = req.query.page || 1;
-    const invoiceNumber = req.query.invoiceNumber || "";
-    let start_date = req.query.start_date || "";
-    let end_date = req.query.end_date || "";
+    const invoiceNumber = req.query.invoiceNumber || '';
+    let start_date = req.query.start_date || '';
+    let end_date = req.query.end_date || '';
 
     // Check if the input is a valid date
     if (isNaN(new Date(start_date).getTime())) {
-      start_date = "";
+      start_date = '';
     }
     if (isNaN(new Date(end_date).getTime())) {
-      end_date = "";
+      end_date = '';
     }
 
     const [nRows] = await Sale.rowListSale(invoiceNumber);
@@ -117,8 +117,9 @@ exports.sale_reports = async (req, res, next) => {
 
 exports.todaySale = async (req, res, next) => {
   try {
+    const [payment] = await Sale.totalAmountAndPaymentType();
     const [result] = await Sale.todaySale();
-    res.send(result);
+    res.send({ result: result, payment: payment });
   } catch (err) {
     console.log(err);
     next(err);
@@ -135,9 +136,9 @@ exports.update = async (req, res, next) => {
     const [result] = await Sale.update_sale(id, cus_id, desc);
     console.log(result);
     if (result.affectedRows > 0) {
-      res.send({ message: "updated", success: true });
+      res.send({ message: 'ការប្រែជោគជ័យ...!', success: true });
     } else {
-      res.send({ message: "failed", success: false });
+      res.send({ message: 'ការប្រែបរាជ័យ...!', success: false });
     }
   } catch (err) {
     next(err);

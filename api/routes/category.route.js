@@ -7,8 +7,9 @@ router
   .route("/categories")
   .get(category.findAllCategories)
   .post(category.createNewCategory);
-
 router.put("/categories/:id", category.updateCategory);
 router.delete("/categories/:id", category.deleteCategory);
 router.get("/categories/:id", category.findOneById);
+router.get("/all_categories", category.allCategories);
+
 module.exports = router;

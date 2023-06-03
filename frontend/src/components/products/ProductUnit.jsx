@@ -246,7 +246,7 @@ const ProductUnit = () => {
                     <h5
                       className="text-xl font-medium leading-normal text-gray-800"
                       id="exampleModalLgLabel">
-                      បន្ថែមឯកតា
+                      បន្ថែមឯកតា 
                     </h5>
                     <button
                       type="button"
@@ -262,7 +262,7 @@ const ProductUnit = () => {
                     <label
                       htmlFor="unit"
                       className="form-label inline-block mb-2 text-gray-700">
-                      ឯកតាផលិតផល
+                      ឯកតាផលិតផល <span className='text-red-500'>*</span>
                     </label>
                     <input
                       className="form-control
@@ -413,7 +413,7 @@ const ProductUnit = () => {
                                   <label
                                     htmlFor="exampleFormControlInput1"
                                     className="form-label inline-block mb-2 text-gray-700">
-                                    ឯកតាផលិតផល
+                                    ឯកតាផលិតផល <span className='text-red-500'>*</span>
                                   </label>
                                   <input
                                     className="form-control

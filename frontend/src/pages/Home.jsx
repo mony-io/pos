@@ -25,8 +25,8 @@ const Home = () => {
 
   return (
     <>
-      {loading ? (<div className='bg-[#ddd] w-full h-screen absolute top-0'>
-        <Space className='flex justify-center items-center h-screen bg-slate-50'>
+      {loading ? (<div className='bg-gray-100 w-full h-screen absolute top-0'>
+        <Space className='flex justify-center items-center h-screen bg-gray-100'>
           <Spin tip="Loading..." size="large">
             <div className='mr-12' />
           </Spin>

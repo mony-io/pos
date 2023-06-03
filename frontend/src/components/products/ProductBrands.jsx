@@ -276,7 +276,7 @@ const ProductBrands = () => {
                     <label
                       htmlFor="unit"
                       className="form-label inline-block mb-2 text-gray-700">
-                      ឈ្មោះ​ម៉ាកផលិតផល
+                      ឈ្មោះ​ម៉ាកផលិតផល <span className='text-red-500'>*</span>
                     </label>
 
                     <input
@@ -445,7 +445,7 @@ const ProductBrands = () => {
                                   <label
                                     htmlFor="unit"
                                     className="form-label inline-block mb-2 text-gray-700">
-                                    ឈ្មោះ​ម៉ាក់
+                                    ឈ្មោះ​ម៉ាក់ <span className='text-red-500'>*</span>
                                   </label>
                                   <input
                                     className="form-control

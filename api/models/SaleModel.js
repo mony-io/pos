@@ -53,6 +53,12 @@ class Sale {
     const sql = "UPDATE tblSales SET customer_id=?,`desc`=? WHERE sale_id=?";
     return db.query(sql, [id, customer_id, desc]);
   }
+
+  static totalAmountAndPaymentType() {
+    const sql = "SELECT *FROM V_TotalPaymentToday";
+    return db.execute(sql);
+  }
+  
 }
 
 module.exports = Sale;

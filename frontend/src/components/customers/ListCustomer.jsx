@@ -191,7 +191,7 @@ const ListCustomer = () => {
             theme: 'light',
           });
           setId('');
-          setOpenUpdate(false)
+          setOpenUpdate(false);
         } else {
           playAudio('http://localhost:3001/audio/audio-notification-sound.mp3');
           toast.error(`${res.data.message}`, {
@@ -228,12 +228,14 @@ const ListCustomer = () => {
           <div className="w-full h-1 bg-blue-400 shadow-sm mb-5"></div>
           <div className="flex justify-between mb-3">
             <div className="flex">
-              {auth.isAdmin &&  <Link to="/addcustomer">
-                <button className="hidden md:block ml-1 px-6 py-1.5 rounded-sm font-medium tracking-wider bg-teal-400 hover:bg-teal-500 duration-200 text-white hover:shadow">
-                  បន្ថែម
-                </button>
-              </Link>}
-             
+              {auth.isAdmin && (
+                <Link to="/addcustomer">
+                  <button className="hidden md:block ml-1 px-6 py-1.5 rounded-sm font-medium tracking-wider bg-teal-400 hover:bg-teal-500 duration-200 text-white hover:shadow">
+                    បន្ថែម
+                  </button>
+                </Link>
+              )}
+
               <div className="ml-5">
                 <span className="text-bold">Show</span>
                 <select
@@ -310,19 +312,20 @@ const ListCustomer = () => {
                         </td>
                         <td className="p-3 whitespace-nowrap">
                           <>
+                            
                             <button
                               onClick={async () => {
                                 await fetchOne(item.id);
                                 setId(item.id);
                                 showModalUpdate(false);
                               }}
-                              disabled={auth.isAdmin?false:true}
-                              className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-blue-700 bg-blue-200 hover:shadow">
+                              disabled={auth.isAdmin ? false : true}
+                              className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
                               <BsPencilSquare size={20} />
                             </button>
                             <button
-                            disabled={auth.isAdmin?false:true}
-                              className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-red-600 bg-red-200 hover:shadow"
+                              disabled={auth.isAdmin ? false : true}
+                              className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow"
                               onClick={() => {
                                 showModal();
                                 setId(item.id);

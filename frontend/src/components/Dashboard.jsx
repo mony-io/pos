@@ -7,13 +7,17 @@ import { HiShoppingCart } from 'react-icons/hi';
 import { TbReportSearch } from 'react-icons/tb';
 import { RiShareCircleFill } from 'react-icons/ri';
 import moment from 'moment';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import Navbar from './Navbar';
 import axios from 'axios';
 import { Bar } from 'react-chartjs-2';
 import { useQuery } from 'react-query';
 import { useAuth } from '../utls/auth';
-
+import { useReactToPrint } from 'react-to-print';
+import TodaySalePrint from './TodaySalePrint';
+import { Modal } from 'antd';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -24,8 +28,6 @@ import {
   Legend,
 } from 'chart.js';
 
-import { Modal } from 'antd';
-
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -35,8 +37,11 @@ ChartJS.register(
   Legend
 );
 
-import { useReactToPrint } from 'react-to-print';
-import TodaySalePrint from './TodaySalePrint';
+//play sound
+function playAudio(url) {
+  const audio = new Audio(url);
+  audio.play();
+}
 
 const fetchChartData = async () => {
   const { data } = await axios.get('http://localhost:3001/api/days_chart');
@@ -93,7 +98,7 @@ const dashboard = () => {
   };
 
   const res = useQuery('fetchTodaySale', fetchTodaySale);
-  console.log(res.data);
+  //console.log(res.data);
 
   const { data } = useQuery('fetchOverall', fetchOverall);
 
@@ -114,9 +119,9 @@ const dashboard = () => {
           'ច័ន្ទ',
           'អង្គារ',
           'ពុធ',
-          'ព្រហស្បត្តិ',
-          'សុក',
-          'សៅ',
+          'ព្រហស្បតិ៍',
+          'សុក្រ',
+          'សៅរ៍',
           'អាទិត្យ',
         ],
         datasets: [
@@ -152,9 +157,11 @@ const dashboard = () => {
     }
   }, [res1.data]);
 
-  const totalRevenue = res.data && res.data.reduce((a, c) => a + c.revenue, 0);
-  const totalCost = res.data && res.data.reduce((a, c) => a + c.cost, 0);
-  const totalProfit = res.data && res.data.reduce((a, c) => a + c.profit, 0);
+  const totalRevenue =
+    res.data && res.data.result.reduce((a, c) => a + c.revenue, 0);
+  const totalCost = res.data && res.data.result.reduce((a, c) => a + c.cost, 0);
+  const totalProfit =
+    res.data && res.data.result.reduce((a, c) => a + c.profit, 0);
   // console.log(totalRevenue, totalCost, totalProfit);
 
   return (
@@ -277,7 +284,24 @@ const dashboard = () => {
           className="col-span-2"
           onClick={() => {
             if (auth.isAdmin) {
-              setIsModalOpen(true);
+              if (!res.isLoading && res.data.result.length === 0) {
+                setIsModalOpen(false);
+                playAudio(
+                  'http://localhost:3001/audio/audio-notification-sound.mp3'
+                );
+                toast.error('សូមអរភ័យទោស...! គ្នានការលក់នៅក្នុងថ្ងៃនេះទេ', {
+                  position: 'top-center',
+                  autoClose: 3000,
+                  hideProgressBar: false,
+                  closeOnClick: true,
+                  pauseOnHover: true,
+                  draggable: true,
+                  progress: undefined,
+                  theme: 'light',
+                });
+              } else {
+                setIsModalOpen(true);
+              }
             }
           }}>
           {auth.isAdmin ? (
@@ -325,8 +349,8 @@ const dashboard = () => {
           </button>,
           <button
             onClick={() => {
-              handlePrint()
-              setIsModalOpen(false)
+              handlePrint();
+              setIsModalOpen(false);
             }}
             type="button"
             className="inline-block px-6 py-2.5 bg-blue-600 text-white text-md leading-tight rounded-sm shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out ml-1">
@@ -368,7 +392,7 @@ const dashboard = () => {
                 </thead>
                 <tbody>
                   {res.data &&
-                    res.data.map((item, index) => {
+                    res.data.result.map((item, index) => {
                       return (
                         <tr
                           key={index + 1}
@@ -401,6 +425,12 @@ const dashboard = () => {
               <div className="text-sm mt-3">
                 ប្រាក់ចំណេញសរុប: ${totalProfit}
               </div>
+              {res.data &&
+                res.data.payment.map((item, index) => (
+                  <div className="text-sm mt-3" key={index + 1}>
+                    {item.payment_type} : ${item.totalAmount}
+                  </div>
+                ))}
             </div>
           </div>
         </div>
@@ -408,7 +438,13 @@ const dashboard = () => {
       </Modal>
       {/* PrintTodaySale */}
       <div className="hidden">
-        <TodaySalePrint componentRef={componentRef} data={res.data} />
+        {res.data && (
+          <TodaySalePrint
+            componentRef={componentRef}
+            data={res.data.result}
+            payment={res.data.payment}
+          />
+        )}
       </div>
     </div>
   );

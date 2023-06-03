@@ -183,13 +183,13 @@ const SaleReports = () => {
                             {item.customerName}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {item.totalPrice.toFixed(2)}
+                            ${item.totalPrice.toFixed(2)}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {item.amount.toFixed(2)}
+                            ${item.amount.toFixed(2)}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
-                            {item.money_change.toFixed(2)}
+                            ${item.money_change.toFixed(2)}
                           </td>
                           <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
                             {item.payment_type}

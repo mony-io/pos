@@ -10,7 +10,7 @@ import { Modal, Button } from 'antd';
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import ReactPaginate from 'react-paginate';
 import { useAuth } from '../../utls/auth';
-import { FaLeaf } from 'react-icons/fa';
+
 //play sound
 function playAudio(url) {
   const audio = new Audio(url);
@@ -230,7 +230,6 @@ const ListSupplier = () => {
                 </button>
               </Link>
             )}
-
             <div>
               Show
               <select
@@ -320,7 +319,7 @@ const ListSupplier = () => {
                             showModalUpdate(false);
                           }}
                           disabled={auth.isAdmin ? false : true}
-                          className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-blue-700 bg-blue-200 hover:shadow">
+                          className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
                           <BsPencilSquare size={20} />
                         </button>
                         <button
@@ -329,7 +328,7 @@ const ListSupplier = () => {
                             showModal();
                             setId(item.id);
                           }}
-                          className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-red-600 bg-red-200 hover:shadow">
+                          className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
                           <AiTwotoneDelete size={20} />
                         </button>
                       </td>

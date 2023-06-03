@@ -5,20 +5,21 @@ const sendEmail = require('../utils/sendEmail');
 
 exports.create = async (req, res, next) => {
   try {
-    const [username] = await Users.check_name(req.body.username);
-    //console.log(username)
+    const [username] = await Users.findByUsername(req.body.username);
     if (username.length !== 0) {
-      return res.send({ message: 'Username already exist.', success: false });
+      return res.send({
+        message: 'ឈ្មោះអ្នកប្រើមានរួចហើយ...!',
+        success: false,
+      });
     }
     if (req.body.email !== '') {
-      const [email] = await Users.check_email(req.body.email);
+      const [email] = await Users.findByEmail(req.body.email);
       if (email.length !== 0) {
-        return res.send({ message: 'email already exist.', success: false });
+        return res.send({ message: 'អ៊ីមែលមានរួចហើយ...!', success: false });
       }
     }
-    //console.log(req.body)
+
     let password = await bcrypt.hash(req.body.password, 10);
-    //console.log(password)
     let user = new Users(
       req.body.username,
       password,
@@ -28,7 +29,9 @@ exports.create = async (req, res, next) => {
       req.body.status_id
     );
     await user.save();
-    res.status(200).send({ message: 'User created.', success: true });
+    res
+      .status(200)
+      .send({ message: 'អ្នកប្រើប្រាស់ត្រូវបានបង្កើត...!', success: true });
   } catch (error) {
     next(error);
   }
@@ -61,7 +64,9 @@ exports.UserLogin = async (req, res, next) => {
   try {
     // validate request
     if (!req.body.email || !req.body.password) {
-      return res.send({ message: 'Email and Password are required.' });
+      return res.send({
+        message: 'សូមអភ័សទោស...! ទាមទារអ៊ីមែលនិងពាក្យសម្ងាត់',
+      });
     }
     const [user, _] = await Users.findByEmail(req.body.email);
     //console.log(user);
@@ -69,7 +74,8 @@ exports.UserLogin = async (req, res, next) => {
       const match = await bcrypt.compare(req.body.password, user[0].password);
       if (!match) {
         return res.send({
-          message: 'Wrong email/username or password.',
+          message:
+            'សូមអភ័សទោស...! ពាក្យសម្ងាត់និងឈ្មោះអ្នកប្រើប្រាស់មិនត្រឹមត្រូវទេ...?',
           success: false,
         });
       }
@@ -109,7 +115,8 @@ exports.UserLogin = async (req, res, next) => {
         const match = await bcrypt.compare(req.body.password, user[0].password);
         if (!match) {
           return res.send({
-            message: 'Wrong email/username or password.',
+            message:
+              'សូមអភ័សទោស...! ពាក្យសម្ងាត់និងឈ្មោះអ្នកប្រើប្រាស់មិនត្រឹមត្រូវទេ...?',
             success: false,
           });
         }
@@ -142,7 +149,8 @@ exports.UserLogin = async (req, res, next) => {
         res.send({ token: accessToken, success: true });
       } else {
         res.send({
-          message: 'Wrong username/email or password.',
+          message:
+            'សូមអភ័សទោស...! ពាក្យសម្ងាត់និងឈ្មោះអ្នកប្រើប្រាស់មិនត្រឹមត្រូវទេ...?',
           success: false,
         });
       }
@@ -169,7 +177,7 @@ exports.logout = async (req, res, next) => {
     const userId = user[0].id;
     await Users.updateRefreshToken(userId, null);
     res.clearCookie('refreshToken');
-    return res.send('Your logout successfully.');
+    return res.send('ការចាកចេញរបស់អ្នកត្រូវបានជោគជ័យ...!');
   } catch (error) {
     next(error);
   }
@@ -177,33 +185,45 @@ exports.logout = async (req, res, next) => {
 
 exports.resetpassword_mail = async (req, res, next) => {
   try {
-    if (!req.body.email) return res.send({ msg: 'Email required.' });
+    if (!req.body.email)
+      return res.send({ msg: 'សូមអភ័សទោស...! ទាមទារអ៊ីមែល...?' });
     const [user] = await Users.findByEmail(req.body.email);
 
     if (user.length > 0) {
+      // reset check admin
+      const [admin] = await Users.isAdmin(req.body.email);
+      if (admin.length === 0) {
+        return res.send({
+          message: `${req.body.email} => អ៊ីមែលមិនមានសិទ្ធគ្រប់គ្រាន់ក្នុងការផ្លាស់ប្ដូរពាក្យសម្ងាត់...!`,
+          success: false,
+        });
+      }
+      // ================================
       const userid = user[0].id;
       const email = user[0].email;
 
       const token = jwt.sign({ userid }, process.env.ACCESS_TOKEN_SECRET, {
         expiresIn: '180s',
       });
-      const links = `<h1>Hello! ${user[0].username}</h1>
-      <p>Please! click this <a href="http://localhost:5173/forgotpassword/${userid}/${token}/">link</a> to reset your password. Remember link will expire in 3mn and password reset only once.</p>
+      const links = `<h1>សួស្ដី..! ${user[0].username}</h1>
+      <p>សូមមេត្តា...!​ ចុចលីងនេះដើម្បីធ្វើការដាក់នៅលើនៅពាក្យសម្ងាត់ថ្មីរបស់លោកអ្នក ==> <a href="http://localhost:5173/forgotpassword/${userid}/${token}/">ដាក់លេខសម្ងាត់ថ្មីនៅទីនេះ...!</a> ចំណាំលីងនេះមិនត្រូវបានប្រើនៅរយះពេល ៣ នាទី ។​ ហើយនៅក្នុងមួយលីងអាចប្រើដើម្បីដាក់បានតែម្ដងគត់​​ ។</p>
     `;
       const result = await sendEmail(email, 'POS reset password mail!.', links);
 
       if (result === true) {
         await Users.updateRefreshToken(userid, token);
         res.send({
-          message: 'password reset link sent to your email account',
+          message:
+            'Link ការផ្លាស់ប្តូរពាក្យសម្ងាត់ត្រូវបានផ្ញើទៅគណនីអ៊ីមែលរបស់អ្នក...!',
           success: true,
         });
       } else {
-        res.send({ message: 'An error occured!', success: false });
+        res.send({ message: 'កំហុស​មួយ​បាន​កើត​ឡើង...!', success: false });
       }
     } else {
       res.send({
-        message: "user with given email doesn't exist",
+        message:
+          '​អ៊ីមែល​អ្នក​ប្រើ​ប្រាស់ដែល​បាន​ផ្ដល់មិន​មានក្នុងប្រព័ន្ធ...!',
         success: false,
       });
     }
@@ -246,7 +266,7 @@ exports.updatePassword = async (req, res, next) => {
         if (err)
           return res.send({
             success: false,
-            message: 'Time out! to reset password',
+            message: 'ការផ្លាស់ប្តូរពាក្យសម្ងាត់ត្រូវបានហួសម៉ោងដែលបានកំណត់...!',
           });
       }
     );
@@ -265,15 +285,19 @@ exports.updatePassword = async (req, res, next) => {
       if (result.affectedRows !== 0) {
         await Users.updateRefreshToken(req.params.id, '');
         return res.send({
-          message: 'Password reset successfully.',
+          message: 'ការផ្លាស់ប្តូរពាក្យសម្ងាត់ត្រូវបានជោគជ័យ...!',
           success: true,
         });
       }
 
-      return res.send({ message: 'Password reset failed.', success: false });
+      return res.send({
+        message: 'ការផ្លាស់ប្តូរពាក្យសម្ងាត់ត្រូវបានបរាជ័យ...!',
+        success: false,
+      });
     } else {
       res.send({
-        message: 'Password reset exspired. Please! send mail again!.',
+        message:
+          'ការផ្លាស់ប្តូរពាក្យសម្ងាត់ត្រូវបានផុតកំណត់កំណត់. សូម! ផ្ញើរសារម្តងទៀត...!',
         success: false,
       });
     }
@@ -291,6 +315,7 @@ exports.changePassword = async (req, res, next) => {
 
     //console.log(user[0].password);
     const match = await bcrypt.compare(req.body.password, user[0].password);
+
     //console.log(match);
     if (!match) {
       return res.send({
@@ -298,6 +323,20 @@ exports.changePassword = async (req, res, next) => {
         success: false,
       });
     } else {
+      // check update duplicate
+      const exist = await bcrypt.compare(
+        req.body.newPassword,
+        user[0].password
+      );
+
+      //console.log(exist);
+      if (exist) {
+        return res.send({
+          message: 'ពាក្យសម្ងាត់មានម្ដងរួចហើយ!',
+          success: false,
+        });
+      }
+
       const [re_update] = await Users.updatePassword(
         newPassword,
         req.params.id
@@ -353,7 +392,7 @@ module.exports.updateOne = async (req, res, next) => {
         success: false,
       });
     }
-    console.log(req.body)
+
     const [user] = await Users.update_duplicate(
       req.params.id,
       req.body.username
@@ -365,17 +404,16 @@ module.exports.updateOne = async (req, res, next) => {
         success: false,
       });
     }
-    if(req.body.email!==''){
-      const [email] = await Users.duplicate_email(req.params.id, req.body.email);
-      if (email.length > 0) {
-        return res.send({
-          message: 'អុីមែលមាននៅក្នុងប្រព័ន្ធរួចហើយ!',
-          success: false,
-        });
-      }
+
+    const [email] = await Users.duplicate_email(req.params.id, req.body.email);
+    if (email.length > 0) {
+      return res.send({
+        message: 'អុីមែលមាននៅក្នុងប្រព័ន្ធរួចហើយ!',
+        success: false,
+      });
     }
-    
-   // console.log(email);
+
+    console.log(email);
 
     const [result] = await Users.updateOne(
       req.body.username,

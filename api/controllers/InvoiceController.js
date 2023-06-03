@@ -1,6 +1,6 @@
-const Invoice = require("../models/InvoiceModel");
-const TelegramBot = require("node-telegram-bot-api");
-require("dotenv").config();
+const Invoice = require('../models/InvoiceModel');
+const TelegramBot = require('node-telegram-bot-api');
+require('dotenv').config();
 const send_message = (message) => {
   try {
     const token = process.env.TELEGRAM_BOT_TOKEN;
@@ -34,48 +34,49 @@ module.exports.saleInvoice = async (req, res, next) => {
 
     // ========= send message to telegram ==========
 
-    let text = "";
-    let saller = "";
+    let text = '';
+    let saller = '';
     let total = 0;
-    let payment = "";
+    let payment = '';
     let amount = 0;
     let moneyChange = 0;
-    let invoiceNumber = "";
+    let invoiceNumber = '';
 
     invoice[0].map((item) => {
       total += item.subtotal;
       invoiceNumber = item.invoice_number;
       saller =
-        "Saller: " +
+        'អ្នកលក់: ' +
         item.username +
-        "\nInvoice number: " +
+        '\nលេខវិក័យប័ត្រ: ' +
         invoiceNumber +
-        "\nDate: " +
+        '\nកាលបរិច្ឆេទ: ' +
         item.sale_date +
-        "\n\n";
+        '\n\n';
 
-      payment = "Payment By: " + item.payment_type;
-      amount = "\nAmount: $" + item.amount + ".00";
-      moneyChange = "\nChange: $" + item.money_change + ".00";
+      payment = 'បង់ដោយ: ' + item.payment_type;
+      amount = '\nប្រាក់បានបង់: $' + item.amount + '.00';
+      moneyChange = '\nប្រាប់អាប់: $' + item.money_change + '.00';
       text +=
+        'ឈ្មោះផលិតផល : ' +
         item.product_name +
-        " " +
-        "\nQty: " +
+        ' ' +
+        '\nចំនួន: ' +
         item.qty +
-        " " +
-        "\nPrice: $" +
+        ' ' +
+        '\nតម្លៃ: $' +
         item.subtotal +
-        ".00" +
-        "\n" +
-        "---------------------\n";
+        '.00' +
+        '\n' +
+        '---------------------\n';
     });
-    if (text !== "" && saller !== "" && total !== 0) {
+    if (text !== '' && saller !== '' && total !== 0) {
       send_message(
         saller +
           text +
-          "Total: $" +
+          'ប្រាក់សរុប: $' +
           total +
-          ".00\n" +
+          '.00\n' +
           payment +
           amount +
           moneyChange
@@ -116,9 +117,9 @@ module.exports.update_invoice = async (req, res, next) => {
     );
 
     if (result.affectedRows > 0) {
-      res.send({ message: "Updated", success: true });
+      res.send({ message: 'បានធ្វើការផ្លាស់ប្ដូរ...!', success: true });
     } else {
-      res.send({ message: "Failed", success: true });
+      res.send({ message: 'បរាជ៏យ...!', success: true });
     }
   } catch (err) {
     next(err);

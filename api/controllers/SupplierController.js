@@ -176,3 +176,12 @@ exports.deleteSupplier = async (req, res, next) => {
     next(err);
   }
 };
+
+exports.AllSuppliers = async (req, res, next) => {
+  try {
+    const [result] = await Supplier.getAllSuppliers();
+    res.send(result);
+  } catch (err) {
+    next(err);
+  }
+};

@@ -2,7 +2,7 @@ import React from 'react'
 import { Result } from 'antd';
 const NotFound = () => {
     return (
-        <div className='bg-[#ddd] w-full absolute top-0 h-screen'>
+        <div className='bg-gray-100 w-full absolute top-0 h-screen'>
             <div className='flex justify-center items-center h-screen'>
                 <Result
                     status="404"

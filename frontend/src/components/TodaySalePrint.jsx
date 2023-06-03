@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-const TodaySalePrint = ({ componentRef, data }) => {
+const TodaySalePrint = ({ componentRef, data, payment }) => {
   // get current date time
   const currentdate = new Date();
   let datetime =
@@ -96,11 +96,15 @@ const TodaySalePrint = ({ componentRef, data }) => {
             </div>
           </div>
           <div className='flex justify-end mr-6' >
-          <div className="flex flex-col p-2">
-            <div className="text-xs mt-2">ចំណាយសរុប: ${totalCost}</div>
-            <div className="text-xs mt-2">ប្រាក់ចំណូលសរុប: ${totalRevenue}</div>
-            <div className="text-xs mt-2">ប្រាក់ចំណេញសរុប: ${totalProfit}</div>
-          </div>
+            <div className="flex flex-col p-2">
+              <div className="text-xs mt-2">ចំណាយសរុប: ${totalCost}</div>
+              <div className="text-xs mt-2">ប្រាក់ចំណូលសរុប: ${totalRevenue}</div>
+              <div className="text-xs mt-2">ប្រាក់ចំណេញសរុប: ${totalProfit}</div>
+              {payment && payment.map((item, index) => (
+                <div className="text-xs mt-2" key={index + 1}>{item.payment_type}: ${item.totalAmount}</div>
+              ))}
+
+            </div>
           </div>
         </div>
       </div>
@@ -109,3 +113,4 @@ const TodaySalePrint = ({ componentRef, data }) => {
 };
 
 export default TodaySalePrint;
+

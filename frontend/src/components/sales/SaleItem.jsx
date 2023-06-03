@@ -7,7 +7,7 @@ const SaleItems = (props) => {
   return (
 
     <div
-      className="row-span-1 -mt-[3px] cursor-pointer overflow-hidden rounded-sm shadow-lg p-[1px] whitespace-nowrap z-40"
+      className="row-span-1 -mt-[3px] cursor-pointer overflow-hidden rounded-sm shadow-lg p-[1px] whitespace-nowrap z-10"
       onClick={() => onAdd(product)}
     >
       <img
@@ -16,7 +16,7 @@ const SaleItems = (props) => {
         alt="img"
         className="rounded-sm object-cover h-[110px] w-[200px] hover:scale-105 duration-300 transition-all ease-in-out z-0"
       />
-      <div className="bg-[#fff] flex-col items-start p-[2px] shadow-sm rounded-b-sm flex justify-center z-40">
+      <div className="bg-[#fff] flex-col items-start p-[2px] shadow-sm rounded-b-sm flex justify-center z-10">
         <span className="pt-[3px] text-base font-medium text-[#333]">
           {product.product_name}
         </span>

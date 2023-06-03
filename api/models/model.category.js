@@ -47,9 +47,14 @@ class Category {
     return db.execute(sql, [search]);
   }
 
-  static CategoryProducts(id){
-    const sql = "CALL CategoryProducts(?)";
-    return db.execute(sql,[id]);
+  static CategoryProducts(id) {
+    const sql = 'CALL CategoryProducts(?)';
+    return db.execute(sql, [id]);
+  }
+
+  static getAllCategories() {
+    const sql = 'SELECT * FROM tblCategories';
+    return db.execute(sql);
   }
 }
 

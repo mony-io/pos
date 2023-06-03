@@ -79,7 +79,6 @@ const Category = () => {
           clearData();
           setMsg(res.data.message);
           setColorStle('bg-red-100 text-red-700');
-          
         }
       } else {
         setMsg('សូម! បញ្ចូលឈ្មេាះក្រុមផលិតផល');
@@ -89,7 +88,7 @@ const Category = () => {
       console.log(err);
     }
   };
-  
+
   // handle update function
   const handleUpdate = async () => {
     try {
@@ -99,7 +98,7 @@ const Category = () => {
           category
         );
         if (res.data.success) {
-        // playAudio('http://localhost:3001/audio/audio-notification-sound.mp3');
+          // playAudio('http://localhost:3001/audio/audio-notification-sound.mp3');
           clearData();
           setColorStle('bg-green-100 text-green-700');
           setMsg(res.data.message);
@@ -268,9 +267,8 @@ const Category = () => {
                     <label
                       htmlFor="unit"
                       className="form-label inline-block mb-2 text-gray-700">
-                      ប្រភេទផលិតផល
+                      ប្រភេទផលិតផល <span className="text-red-500">*</span>
                     </label>
-
                     <input
                       className="form-control
                       block
@@ -400,7 +398,7 @@ const Category = () => {
                             data-bs-target="#updateCategory"
                             onClick={async () => {
                               try {
-                                setMsg('')
+                                setMsg('');
                                 const res = await axios.get(
                                   `http://localhost:3001/categories/${item.id}`
                                 );
@@ -438,7 +436,8 @@ const Category = () => {
                                   <label
                                     htmlFor="unit"
                                     className="form-label inline-block mb-2 text-gray-700">
-                                    ប្រភេទផលិតផល
+                                    ប្រភេទផលិតផល{' '}
+                                    <span className="text-red-500">*</span>
                                   </label>
                                   <input
                                     className="form-control

@@ -5,7 +5,7 @@ import { useAuth } from '../utls/auth';
 import { Spin, Space } from 'antd';
 import { toast, ToastContainer } from 'react-toastify';
 import logo from '../assets/pss.png';
-import bg from '../assets/bg.jpg';
+import bg from '../assets/bg.png';
 import 'react-toastify/dist/ReactToastify.css';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import jwt_decode from 'jwt-decode';
@@ -53,10 +53,10 @@ const Login = () => {
     e.preventDefault();
 
     if (email.trim() === '') {
-      setMsgEmail('Please! Enter your email/username.');
+      setMsgEmail('សូម! បញ្ចូលអ៊ីមែល/ឈ្មោះអ្នកប្រើប្រាស់');
       emailRef.current?.focus();
     } else if (password.trim() === '') {
-      setMsgPwd('Please! Enter your password.');
+      setMsgPwd('សូម! បញ្ចូលពាក្យសម្ងាត់របស់អ្នក');
       pwdRef.current?.focus();
     } else {
       if (validEmail && validPwd) {
@@ -120,7 +120,7 @@ const Login = () => {
   return (
     <>
       {loading ? (
-        <section className="bg-gray-50 w-full h-screen absolute top-0">
+        <section className="bg-gray-100 w-full h-screen absolute top-0">
           <div className="flex flex-row items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
             <div className="drop-shadow-2xl">
               <img
@@ -167,7 +167,7 @@ const Login = () => {
                             setMsgEmail('');
                             setValidEmail(true);
                           } else {
-                            setMsgEmail('Email or Username not correct!.');
+                            setMsgEmail('ឈ្មោះ / អីមែលមិនត្រឹមត្រូវ');
                             setValidEmail(false);
                           }
                         } else {
@@ -204,7 +204,7 @@ const Login = () => {
                               setMsgPwd('');
                             } else {
                               setValidPwd(false);
-                              setMsgPwd('Not valid password.');
+                              setMsgPwd('ពាក្យសម្ងាត់មិនត្រឹមត្រូវ');
                             }
                           } else {
                             setMsgPwd('សូម! បញ្ចូលពាក្យសម្ងាត់របស់អ្នក');

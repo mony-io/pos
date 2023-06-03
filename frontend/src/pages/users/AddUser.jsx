@@ -164,7 +164,7 @@ const Adduser = () => {
               <label
                 htmlFor="username"
                 className="block mb-2 text-sm font-medium text-gray-900 ">
-                ឈ្មោះ​គណនី
+                ឈ្មោះ​គណនី <span className='text-red-500'>*</span>
               </label>
               <input
                 onKeyDown={(e) => {
@@ -220,7 +220,7 @@ const Adduser = () => {
               <label
                 htmlFor="password"
                 className="block mb-2 text-sm font-medium text-gray-900">
-                ពាក្យសម្ងាត់
+                ពាក្យសម្ងាត់<span className='text-red-500'>*</span>
               </label>
               <input
                 onKeyDown={(e) => {
@@ -280,7 +280,7 @@ const Adduser = () => {
               <label
                 htmlFor="confirmPwd"
                 className="block mb-2 text-sm font-medium text-gray-900 ">
-                ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់
+                ផ្ទៀងផ្ទាត់ពាក្យសម្ងាត់<span className='text-red-500'>*</span>
               </label>
               <input
                 onKeyDown={(e) => {
@@ -341,7 +341,7 @@ const Adduser = () => {
               <label
                 htmlFor="roles"
                 className="block mb-2 text-sm font-medium text-gray-900 ">
-                ប្រភេទអ្នកប្រើប្រាស់
+                ប្រភេទអ្នកប្រើប្រាស់<span className='text-red-500'>*</span>
               </label>
               <select
                 onChange={(e)=>{
