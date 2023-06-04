@@ -312,25 +312,50 @@ const ListSupplier = () => {
                         {item.address}
                       </td>
                       <td className="p-3 whitespace-nowrap">
-                        <button
-                          onClick={async () => {
-                            await fetchOne(item.id);
-                            setId(item.id);
-                            showModalUpdate(false);
-                          }}
-                          disabled={auth.isAdmin ? false : true}
-                          className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
-                          <BsPencilSquare size={20} />
-                        </button>
-                        <button
-                          disabled={auth.isAdmin ? false : true}
-                          onClick={() => {
-                            showModal();
-                            setId(item.id);
-                          }}
-                          className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
-                          <AiTwotoneDelete size={20} />
-                        </button>
+                        {auth.isAdmin ? (
+                          <button
+                            onClick={async () => {
+                              await fetchOne(item.id);
+                              setId(item.id);
+                              showModalUpdate(false);
+                            }}
+                            disabled={auth.isAdmin ? false : true}
+                            className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-blue-700 bg-blue-200 hover:shadow">
+                            <BsPencilSquare size={20} />
+                          </button>
+                        ) : (
+                          <button
+                            onClick={async () => {
+                              await fetchOne(item.id);
+                              setId(item.id);
+                              showModalUpdate(false);
+                            }}
+                            disabled={auth.isAdmin ? false : true}
+                            className="mx-2 px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
+                            <BsPencilSquare size={20} />
+                          </button>
+                        )}
+                        {auth.isAdmin ? (
+                          <button
+                            disabled={auth.isAdmin ? false : true}
+                            onClick={() => {
+                              showModal();
+                              setId(item.id);
+                            }}
+                            className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-red-600 bg-red-200 hover:shadow">
+                            <AiTwotoneDelete size={20} />
+                          </button>
+                        ) : (
+                          <button
+                            disabled={auth.isAdmin ? false : true}
+                            onClick={() => {
+                              showModal();
+                              setId(item.id);
+                            }}
+                            className="px-3 py-1.5 rounded-sm font-medium tracking-wider text-slate-400 bg-slate-300 hover:shadow">
+                            <AiTwotoneDelete size={20} />
+                          </button>
+                        )}
                       </td>
                     </tr>
                   );

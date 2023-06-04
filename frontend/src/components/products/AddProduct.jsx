@@ -761,7 +761,7 @@ const AddProduct = () => {
                       return (
                         <option value={item.id} key={index + 1}>
                           {item.supName}{' '}
-                          {item.companyName && `(${item.companyName})`}
+                          {item.companyName && `(${item.companyName})`}({item.phone})
                         </option>
                       );
                     })}
